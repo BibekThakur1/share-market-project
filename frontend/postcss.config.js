@@ -2,9 +2,10 @@
 import tailwindcss from 'tailwindcss';
 import autoprefixer from 'autoprefixer';
 
+// postcss.config.js
 export default {
-  plugins: [
-    tailwindcss(), // Call tailwindcss as a function
-    autoprefixer(),
-  ],
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
 }

@@ -1,4 +1,6 @@
-/** @type {import('tailwindcss/types/config').Config} */ // Note the updated type path for v4
+
+
+  /** @type {import('tailwindcss').Config} */
 export default {
     content: [
       "./index.html",
