@@ -21,7 +21,7 @@ const App = () => {
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
         <div className="flex items-center justify-center h-16 border-b border-gray-200">
-          <h1 className="text-2xl font-bold text-blue-600">StockAdmin</h1>
+        <p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-blue-600">FlowAdmin</p>
         </div>
         <nav className="flex-1 p-4 space-y-2">
           <NavItem icon={Home} label="Dashboard" isActive={currentPage === 'dashboard'} onClick={() => { setCurrentPage('dashboard'); setIsSidebarOpen(false); }} />
@@ -29,8 +29,17 @@ const App = () => {
           <NavItem icon={Newspaper} label="News" isActive={currentPage === 'news'} onClick={() => { setCurrentPage('news'); setIsSidebarOpen(false); }} />
           <NavItem icon={Users} label="Users" isActive={currentPage === 'users'} onClick={() => { setCurrentPage('users'); setIsSidebarOpen(false); }} />
           <NavItem icon={Settings} label="Settings" isActive={currentPage === 'settings'} onClick={() => { setCurrentPage('settings'); setIsSidebarOpen(false); }} />
+          <NavItem icon={X} label="Close" isActive={false} onClick={() => setIsSidebarOpen(false)} className="lg:hidden" />  
         </nav>
       </aside>
+
+        {/* Overlay for mobile sidebar (only visible when sidebar is open) */}
+        {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        ></div>
+      )}
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -90,11 +99,11 @@ const App = () => {
 };
 
 // Navigation Item Component
-const NavItem = ({ icon: Icon, label, isActive, onClick }) => (
+const NavItem = ({ icon: Icon, label, isActive, onClick,className = '' }) => (
   <button
     className={`flex items-center w-full px-4 py-2 rounded-lg text-left transition-all duration-200
-      ${isActive ? 'bg-blue-100 text-blue-700 font-semibold' : 'text-gray-600 hover:bg-gray-100 hover:text-blue-600'}`}
-    onClick={onClick}
+      ${isActive ? 'bg-blue-100 text-blue-700 font-semibold' : 'text-gray-600 hover:bg-gray-100 hover:text-blue-600'}
+      ${className}`}    onClick={onClick}
   >
     <Icon className="w-5 h-5 mr-3" />
     <span>{label}</span>
@@ -413,9 +422,16 @@ const News = () => {
 
   const handleDeleteArticle = (id) => {
     if (window.confirm('Are you sure you want to delete this article?')) {
-      setArticles(articles.filter(article => article.id !== id));
+      const userConfirmed = true;
+      if (userConfirmed) {
+        setArticles(articles.filter(article => article.id !== id));
+        console.log(`Article with ID ${id} deleted.`); // Log for demonstration
+      }
+
     }
   };
+
+ 
 
   return (
     <div className="space-y-6">
